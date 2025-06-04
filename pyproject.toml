@@ -7,10 +7,12 @@ requires-python = ">=3.12"
 dependencies = [
     "cohere>=5.15.0",
     "faiss-cpu>=1.11.0",
+    "fastmcp>=2.6.1",
     "haystack>=0.42",
     "langchain>=0.3.25",
     "langchain-experimental>=0.3.4",
     "langchain-huggingface>=0.2.0",
+    "langchain-mcp-adapters>=0.1.4",
     "langchain-openai>=0.3.19",
     "neo4j>=5.28.1",
     "pypdf>=5.6.0",
