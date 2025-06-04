@@ -1,0 +1,14 @@
+langchain
+langchain-huggingface
+langchain-experimental
+langchain-openai
+faiss-cpu
+cohere
+pypdf
+requests
+haystack
+neo4j
+sentence-transformers
+tiktoken
+streamlit
+
