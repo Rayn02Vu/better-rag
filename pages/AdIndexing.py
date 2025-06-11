@@ -10,7 +10,6 @@ st.sidebar.markdown(
     Metadata giúp LLM hiểu cấu trúc tài liệu và truy vấn nhanh chóng, chính xác hơn.
     """
 )
-setup_advanced_vectorstore("VN-History")
 
 index = get_vectorstore("VN-History")
 
