@@ -1,18 +1,29 @@
 import streamlit as st
 from streamlit import session_state as ss
-from llm.Agent import Agent
+from Indexing import get_vectorstore
+from llm.LLM import LLM
+st.title("Simple RAG")
 
-from Chatting import client
+vectorstore = get_vectorstore("VN-History")
 
-rag_agent = Agent(tools=[])
-st.title("RAG Agent")
-st.sidebar.markdown(
-    """
-    # RAG Agent
-    This is a agent that can retrieval documents and answer questions.
-    He have a tools: retrieve documents from a vector store.
-    """
-)
+retriever = vectorstore.as_retriever()
 
-import asyncio
-asyncio.run(client(rag_agent))
+llm = LLM()
+
+if prompt := st.text_input("Query from 'LichsuDang.pdf'"):
+    docs =  retriever.invoke(prompt)
+
+    st.markdown("### Retrieved Documents")
+    
+    for doc in docs:
+        st.write("---")
+        st.markdown("##### **Document**")
+        st.text(doc.page_content)
+
+    response = llm.invoke(prompt, [doc.page_content for doc in docs])
+
+    st.markdown("### LLM Answer")
+    st.write(response)
+
+
+    

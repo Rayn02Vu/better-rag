@@ -1,8 +1,12 @@
 from langchain_core.tools import tool, create_retriever_tool
 from datetime import datetime
 from langchain_community.tools import DuckDuckGoSearchRun
-import requests
+from langchain_community.vectorstores import FAISS
+from langchain_core.documents import Document
 
+import requests
+from Indexing import get_vectorstore
+from llm.utils import meta_docs
 
 @tool
 def get_time_tool(tool_input: dict = None) -> str:
@@ -39,3 +43,20 @@ def search_tool(querys: list[str]) -> list:
             results.extend(result)
     return results
    
+
+@tool
+def retrieval_tool(query: str, key: str = "VN-History") -> list[Document]:
+    """
+    Use this tool to retrieve documents from a vectorstore.
+    Args:
+        key (str): The name of the vectorstore to retrieve from.
+        query (str): The query to retrieve documents for.
+    Returns:
+        list[Document]: A list of documents that match the query.
+    """
+    index: FAISS = get_vectorstore(key)
+    if not index:
+        return []
+    retriever = index.as_retriever()
+    docs = retriever.invoke(query)
+    return docs
